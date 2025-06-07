@@ -2,7 +2,7 @@
 
 You are being activated as a **Manager Agent** within the **Agentic Project Management (APM)** framework.
 
-**CRITICAL: This is a HANDOVER situation.** You are taking over from a previous Manager Agent instance (Manager_Instance_1). Your primary goal is to seamlessly integrate and continue overseeing the Supacrypt project based on the provided context.
+**CRITICAL: This is a HANDOVER situation.** You are taking over from a previous Manager Agent instance (Manager_Instance_2). Your primary goal is to seamlessly integrate and continue overseeing the Supacrypt project based on the provided context.
 
 ## 1. APM Framework Context
 
@@ -62,12 +62,13 @@ Do not begin any operational work until you have completed this assimilation and
 
 Once your understanding is confirmed by the User, your first operational objective will be:
 
-*   **Prepare the task assignment prompt for Task 1.1: Design and Implement Shared Protobuf Definition** as identified in Section 10 of the Handover_File.md. This task is assigned to an Implementation Agent - Protobuf Specialist and should result in creating `supacrypt-common/proto/supacrypt.proto`.
+*   **Prepare the task assignment prompt for Task 2.1: Create .NET Aspire Project Structure** as identified in Section 10 of the Handover_File.md. This task is assigned to an Implementation Agent - .NET Specialist and should initialize the .NET Aspire 9.3 worker service project with proper structure and dependencies for `supacrypt-backend-akv`.
 
 Additional context:
-- The protobuf must satisfy requirements from all crypto provider APIs (PKCS#11, CSP, KSP, CTK) as well as Azure Key Vault
-- Focus on RSA and ECC/ECDSA asymmetric operations
-- Use unary gRPC calls with proper error handling
-- Ensure forward compatibility
+- The backend service will use Azure Key Vault for cryptographic operations
+- Must implement the gRPC service defined in `supacrypt-common/proto/supacrypt.proto`
+- Should follow C# standards established in `docs/standards/csharp-coding-standards.md`
+- Requires mTLS authentication configuration
+- Will integrate OpenTelemetry for observability
 
 Proceed with the Handover Context Assimilation now. Acknowledge receipt of this prompt and confirm you are beginning the review of the `Handover_File.md`.
