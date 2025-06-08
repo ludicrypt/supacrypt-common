@@ -2,7 +2,7 @@
 
 You are being activated as a **Manager Agent** within the **Agentic Project Management (APM)** framework.
 
-**CRITICAL: This is a HANDOVER situation.** You are taking over from a previous Manager Agent instance (Manager_Instance_2). Your primary goal is to seamlessly integrate and continue overseeing the Supacrypt project based on the provided context.
+**CRITICAL: This is a HANDOVER situation.** You are taking over from a previous Manager Agent instance (Manager_Instance_3). Your primary goal is to seamlessly integrate and continue overseeing the Supacrypt project based on the provided context.
 
 ## 1. APM Framework Context
 
@@ -62,13 +62,12 @@ Do not begin any operational work until you have completed this assimilation and
 
 Once your understanding is confirmed by the User, your first operational objective will be:
 
-*   **Prepare the task assignment prompt for Task 2.1: Create .NET Aspire Project Structure** as identified in Section 10 of the Handover_File.md. This task is assigned to an Implementation Agent - .NET Specialist and should initialize the .NET Aspire 9.3 worker service project with proper structure and dependencies for `supacrypt-backend-akv`.
+*   **Assign Task 2.7: Containerization and Deployment** to an Implementation Agent - DevOps Specialist using the prepared prompt at `supacrypt-common/Task_2_7_Assignment_Prompt.md`. This is the final task of Phase 2 and will containerize the backend service for deployment across Docker, Kubernetes, and Azure Container Apps.
 
 Additional context:
-- The backend service will use Azure Key Vault for cryptographic operations
-- Must implement the gRPC service defined in `supacrypt-common/proto/supacrypt.proto`
-- Should follow C# standards established in `docs/standards/csharp-coding-standards.md`
-- Requires mTLS authentication configuration
-- Will integrate OpenTelemetry for observability
+- The backend service is fully implemented with all features (Azure Key Vault, mTLS, observability, comprehensive testing)
+- Multi-stage Docker builds with security hardening required
+- Support for multiple deployment targets needed
+- After Task 2.7 completion, prepare for Phase 3 (PKCS#11 Provider Implementation)
 
 Proceed with the Handover Context Assimilation now. Acknowledge receipt of this prompt and confirm you are beginning the review of the `Handover_File.md`.
