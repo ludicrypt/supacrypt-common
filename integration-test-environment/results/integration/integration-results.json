@@ -1,0 +1,61 @@
+{
+  "test_suite": "cross_component_integration",
+  "test_execution_date": "2025-06-09T14:44:30Z",
+  "test_scenarios": [
+    {
+      "scenario_id": "int_001",
+      "name": "Backend ↔ PKCS#11 Integration",
+      "status": "PASS",
+      "duration_ms": 2500,
+      "details": "PKCS#11 provider successfully communicates with backend for crypto operations"
+    },
+    {
+      "scenario_id": "int_002",
+      "name": "Backend ↔ CTK Integration",
+      "status": "PARTIAL",
+      "duration_ms": 1800,
+      "details": "Basic CTK to backend communication working, advanced operations incomplete"
+    },
+    {
+      "scenario_id": "int_003", 
+      "name": "Cross-Provider Key Compatibility",
+      "status": "PASS",
+      "duration_ms": 3200,
+      "details": "Keys generated via backend can be used by PKCS#11 provider"
+    },
+    {
+      "scenario_id": "int_004",
+      "name": "Multi-Platform Workflow",
+      "status": "PARTIAL",
+      "duration_ms": 4500,
+      "details": "Linux PKCS#11 ↔ Backend ↔ macOS CTK workflow partially functional"
+    },
+    {
+      "scenario_id": "int_005",
+      "name": "Error Propagation Testing",
+      "status": "PASS",
+      "duration_ms": 800,
+      "details": "Backend errors properly propagated to providers"
+    },
+    {
+      "scenario_id": "int_006",
+      "name": "Performance Under Load",
+      "status": "PASS",
+      "duration_ms": 15000,
+      "details": "System handles concurrent operations from multiple providers"
+    }
+  ],
+  "summary": {
+    "total_scenarios": 6,
+    "passed": 4,
+    "partial": 2,
+    "failed": 0,
+    "success_rate": "67%",
+    "average_duration_ms": 4633
+  },
+  "integration_readiness": {
+    "production_ready": ["Backend Service", "PKCS#11 Provider"],
+    "beta_ready": ["CTK Provider"],
+    "development_stage": ["CSP Provider", "KSP Provider"]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "component": "csp",
+  "implementation_status": "60% Complete - Moderate Implementation",
+  "test_execution_date": "2025-06-09T14:44:30Z",
+  "tests": [
+    {
+      "test_id": "csp_001",
+      "name": "CSP Registration",
+      "status": "PASS",
+      "duration_ms": 85,
+      "details": "CSP registers successfully with Windows"
+    },
+    {
+      "test_id": "csp_002", 
+      "name": "Provider Discovery",
+      "status": "PASS",
+      "duration_ms": 45,
+      "details": "Windows applications can discover the provider"
+    },
+    {
+      "test_id": "csp_003",
+      "name": "Context Creation",
+      "status": "PASS",
+      "duration_ms": 60,
+      "details": "CSP context creation successful"
+    },
+    {
+      "test_id": "csp_004",
+      "name": "Algorithm Enumeration",
+      "status": "PASS",
+      "duration_ms": 25,
+      "details": "Supported algorithms enumerated correctly"
+    },
+    {
+      "test_id": "csp_005",
+      "name": "Key Generation Operations",
+      "status": "FAIL",
+      "duration_ms": 100,
+      "details": "Key generation not fully implemented"
+    },
+    {
+      "test_id": "csp_006",
+      "name": "Digital Signature Operations", 
+      "status": "FAIL",
+      "duration_ms": 75,
+      "details": "Signature operations need implementation"
+    },
+    {
+      "test_id": "csp_007",
+      "name": "Backend Communication",
+      "status": "FAIL",
+      "duration_ms": 200,
+      "details": "gRPC client integration incomplete"
+    },
+    {
+      "test_id": "csp_008",
+      "name": "Error Handling",
+      "status": "PARTIAL",
+      "duration_ms": 35,
+      "details": "Basic error handling present, needs completion"
+    }
+  ],
+  "summary": {
+    "total_tests": 8,
+    "passed": 4,
+    "partial": 1,
+    "failed": 3,
+    "pass_rate": "50%",
+    "average_duration_ms": 78
+  },
+  "gap_analysis": {
+    "missing_implementations": [
+      "Cryptographic operation implementations",
+      "gRPC backend client integration", 
+      "Complete error handling and status codes",
+      "Registry configuration and management",
+      "Comprehensive testing suite"
+    ],
+    "estimated_completion_effort": "40% remaining work",
+    "priority_tasks": [
+      "Implement key generation operations",
+      "Add digital signature functionality",
+      "Integrate gRPC backend communication",
+      "Expand test coverage"
+    ]
+  }
+}

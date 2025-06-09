@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # Azure Key Vault mock/emulator for testing
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    ports:
+      - "10000:10000"
+      - "10001:10001" 
+      - "10002:10002"
+    volumes:
+      - azurite-data:/data
+    command: "azurite --silent --location /data --debug /data/debug.log"
+
+  # Supacrypt Backend Service
+  supacrypt-backend:
+    build:
+      context: ../supacrypt-backend-akv
+      dockerfile: Dockerfile.development
+    ports:
+      - "5000:5000"  # HTTP
+      - "5001:5001"  # HTTPS
+      - "5051:5051"  # gRPC
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5001;http://+:5000
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=supacrypt
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - AzureKeyVault__VaultUrl=https://test-vault.vault.azure.net/
+      - AzureKeyVault__UseManagedIdentity=false
+      - Security__RequireClientCertificate=false
+    volumes:
+      - ../supacrypt-backend-akv/scripts/dev-certs:/https:ro
+      - ./configs/backend:/app/configs:ro
+    depends_on:
+      - azurite
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Test orchestration service
+  test-orchestrator:
+    build:
+      context: ./test-orchestrator
+      dockerfile: Dockerfile
+    volumes:
+      - ./tests:/tests:ro
+      - ./results:/results
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - BACKEND_URL=https://supacrypt-backend:5001
+      - TEST_SUITE=integration
+    depends_on:
+      - supacrypt-backend
+
+  # PKCS#11 test environment (Linux)
+  pkcs11-test:
+    build:
+      context: ../supacrypt-pkcs11
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./tests/pkcs11:/test-data:ro
+      - ./results/pkcs11:/test-results
+    environment:
+      - SUPACRYPT_BACKEND=supacrypt-backend:5051
+      - PKCS11_LIBRARY_PATH=/usr/local/lib/libsupacrypt-pkcs11.so
+    depends_on:
+      - supacrypt-backend
+
+  # Performance monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=supacrypt
+    volumes:
+      - ./configs/grafana:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+
+  # Security scanning
+  security-scanner:
+    build:
+      context: ./security-tools
+      dockerfile: Dockerfile
+    volumes:
+      - ./results/security:/scan-results
+      - ../:/source-code:ro
+    environment:
+      - SCAN_TARGET=supacrypt-backend:5001
+    depends_on:
+      - supacrypt-backend
+
+volumes:
+  azurite-data:
+  grafana-data:
+
+networks:
+  default:
+    name: supacrypt-test-network
